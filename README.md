@@ -87,6 +87,6 @@ We need to build a backend system that can support different features for an air
 ---
 
 ## Image Representation
-![System Overview](./image.png)  
+![System Overview](./Architecture.png)  
 
 
