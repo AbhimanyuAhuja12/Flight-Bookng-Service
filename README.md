@@ -1,48 +1,92 @@
-This is a base node js project template, which anyone can use as it has been prepared, by keeping some of the most important code principles and project management recommendations. Feel free to change anything. 
+# Airline Backend System
+
+## Objective
+We need to build a backend system that can support different features for an airline company. Our end user is going to be someone who wants to book flights and query about flights, so we need a robust system to provide the best experience possible. This document focuses solely on the backend part of the system. The entire backend should be built with maintainability in mind.
+
+---
+
+## Requirements
+
+### Flight Search
+- A user should be able to search for flights from one place to another.
+- Users should be able to mention the source and destination details.
+- Users should be able to select the date of the journey.
+- **[V2]** Users should be able to search for return flights and multi-city flights.
+- Users should be able to select the class of the flights *(non-mandatory)*.
+- Users should be able to book multiple tickets *(non-mandatory)*.
+- Based on the above data, the system should list down the flights.
+- Flights should be ranked based on:
+  - Time period of flight
+  - Price
+- Support for pagination to list flights efficiently.
+- Filtering options:
+  - Price
+  - Departure time
+  - Duration
+- Additional filters support.
+
+### Booking and Payment
+- A user should be able to book a flight (only if registered on the platform).
+- Users should be able to cancel a booking, with refund initiation based on predefined criteria.
+- Users should be able to request and book excess luggage for every flight.
+- Payment system integration *(dummy payments for now)*.
+- Users should be able to track flight prices and receive notifications about price drops or delays.
+
+### User Account and Notifications
+- Users should be able to view their previous and upcoming flights.
+- Users should be able to download their boarding pass if they have completed online check-in.
+- Online check-in should be supported.
+- Email notifications:
+  - Reminder to complete online check-in (3 hours before departure).
+  - Alerts about any flight delays.
+- Users should be able to review their flight journey *(only if they have booked a flight)*.
+  - Review mechanism should include:
+    - Star rating
+    - Comment section
+  - Flight listings should display user reviews.
+
+### Authentication and Customer Support
+- Users should be able to authenticate using email and password.
+- **[V2]** Support ticketing system for user queries.
+- FAQs section with static data.
+- **[V2]** Seat selection feature.
+- Coupons for discounts and offers.
+- A single user should be able to book multiple seats with one login ID.
+
+---
+
+## Non-Functional Requirements
+- Expect more flight searches than actual bookings.
+- Booking system must be **highly accurate**.
+- Traffic estimation:
+  - **1,00,000 total users**
+  - **5,00,000 bookings per quarter**
+  - **5,000 bookings per day**
+  - The system should **scale up to 3x the current estimated traffic**.
+- The system should handle **real-time updates to flight prices** before finalizing a booking.
+- **Concurrency should be handled using an RDBMS** for optimal performance.
+
+---
+
+## Capacity and Traffic Estimation
+
+### Storage Estimation
+- For the upcoming **5 years**:
+  - **80,00,000 bookings**
+  - **2,00,000 users**
+  - Considering that all user records and booking records take **10 MB of data**, we estimate that **10 TB of storage** should be sufficient for our pilot run.
+
+### Traffic Estimation
+- With a **search:booking ratio of 30:1**, we expect a maximum of **1,50,000 search queries per day**.
+- At peak times, this translates to **~2 queries per second**.
+
+---
 
 
-`src` -> Inside the src folder all the actual source code regarding the project will reside, this will not include any kind of tests. (You might want to make separate tests folder)
 
-Lets take a look inside the `src` folder
+---
 
- - `config` -> In this folder anything and everything regarding any configurations or setup of a library or module will be done. For example: setting up `dotenv` so that we can use the environment variables anywhere in a cleaner fashion, this is done in the `server-config.js`. One more example can be to setup you logging library that can help you to prepare meaningful logs, so configuration for this library should also be done here. 
+## Image Representation
+![System Overview](./image.png)  
 
- - `routes` -> In the routes folder, we register a route and the corresponding middleware and controllers to it. 
 
- - `middlewares` -> they are just going to intercept the incoming requests where we can write our validators, authenticators etc. 
-
- - `controllers` -> they are kind of the last middlewares as post them you call you business layer to execute the budiness logic. In controllers we just receive the incoming requests and data and then pass it to the business layer, and once business layer returns an output, we structure the API response in controllers and send the output. 
-
- - `repositories` -> this folder contains all the logic using which we interact the DB by writing queries, all the raw queries or ORM queries will go here.
-
- - `services` -> contains the buiness logic and interacts with repositories for data from the database
-
- - `utils` -> contains helper methods, error classes etc.
-
-### Setup the project
-
- - Download this template from github and open it in your favourite text editor. 
- - Go inside the folder path and execute the following command:
-  ```
-  npm install
-  ```
- - In the root directory create a `.env` file and add the following env variables
-    ```
-        PORT=<port number of your choice>
-    ```
-    ex: 
-    ```
-        PORT=3000
-    ```
- - go inside the `src` folder and execute the following command:
-    ```
-      npx sequelize init
-    ```
- - By executing the above command you will get migrations and seeders folder along with a config.json inside the config folder. 
- - If you're setting up your development environment, then write the username of your db, password of your db and in dialect mention whatever db you are using for ex: mysql, mariadb etc
- - If you're setting up test or prod environment, make sure you also replace the host with the hosted db url.
-
- - To run the server execute
- ```
- npm run dev
- ```
